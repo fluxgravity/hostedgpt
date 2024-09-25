@@ -1,5 +1,5 @@
 class Conversation < ApplicationRecord
-  include Version, Billable
+  include Version
 
   belongs_to :user
   belongs_to :assistant
@@ -55,6 +55,10 @@ class Conversation < ApplicationRecord
     keys.zip(values)
       .to_h
       .delete_if { |_, v| v.empty? }
+  end
+
+  def total_cost
+    input_token_total_cost + output_token_total_cost
   end
 
   private
